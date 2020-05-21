@@ -103,7 +103,8 @@ export class MainComponent implements OnInit {
     maxTimePodcast: "",
     maxTimePodcastLink: "",
     minTimePodcast: "",
-    minTimePodcastLink: ""
+    minTimePodcastLink: "",
+    avgTimePodcast: ""
   };
 
   constructor(
@@ -142,6 +143,8 @@ export class MainComponent implements OnInit {
       let minTimeObject = this.podcastList.filter(x => x.podcastTime == minTime)[0];
       this.display.minTimePodcast = minTimeObject.year + "/" + minTimeObject.count + " (" + this.timeFormat(minTime) + ")";
       this.display.minTimePodcastLink = minTimeObject.podcastLink;
+
+      this.display.avgTimePodcast = this.timeFormat(Math.floor((this.podcastList.map(x => x.podcastTime).reduce((a, b) => { return a + b })) / (this.podcastList.length))).toString();
 
 
       this.podcastList.forEach(element => {
