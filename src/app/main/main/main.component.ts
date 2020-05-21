@@ -35,6 +35,24 @@ export class MainComponent implements OnInit {
     type: this.commonChartFeatures.type
   };
 
+  public chartYearPodcastTime = {
+    dataset: [{ data: [], label: 'Podcast Süresi (dk)' }],
+    label: [],
+    option: this.commonChartFeatures.option,
+    color: [{ backgroundColor: 'rgba(90,150,10,0.40)', borderColor: 'rgba(90,150,10,0.50)' }],
+    legend: this.commonChartFeatures.legend,
+    type: this.commonChartFeatures.type
+  };
+
+  public chartPodcastTime = {
+    dataset: [{ data: [], label: 'Podcast Süresi (dk)' }],
+    label: [],
+    option: this.commonChartFeatures.option,
+    color: [{ backgroundColor: 'rgba(11,10,110,0.40)', borderColor: 'rgba(11,10,110,0.50)' }],
+    legend: this.commonChartFeatures.legend,
+    type: "bar"
+  };
+
   public chartYearContent = {
     dataset: [{ data: [], label: 'Konu Sayısı' }],
     label: [],
@@ -80,7 +98,12 @@ export class MainComponent implements OnInit {
     totalContentLink: 0,
     totalPodcastWithVideo: 0,
     totalPodcastNotWithVideo: 0,
-    totalPodcastExplanation: 0
+    totalPodcastExplanation: 0,
+    totalPodcastTime: "",
+    maxTimePodcast: "",
+    maxTimePodcastLink: "",
+    minTimePodcast: "",
+    minTimePodcastLink: ""
   };
 
   constructor(
@@ -104,12 +127,40 @@ export class MainComponent implements OnInit {
       this.display.totalPodcastNotWithVideo = this.podcastList.filter(x => x.videoLink == "#").length;
       this.display.totalPodcastExplanation = this.podcastList.filter(x => x.explanationPodcast.length > 0).length;
 
+      let totalTimeSeconds = this.podcastList.map(x => x.podcastTime).reduce((a, b) => { return a + b });
+      let timeHour = Math.floor(totalTimeSeconds / 3600);
+      let timeMinute = Math.floor((totalTimeSeconds % 3600) / 60);
+      let timeSeconds = (totalTimeSeconds % 3600) % 60;
+      this.display.totalPodcastTime = timeHour + " saat, " + timeMinute + " dakika, " + timeSeconds + " saniye";
+
+      let maxTime = Math.max(...this.podcastList.map(x => x.podcastTime));
+      let maxTimeObject = this.podcastList.filter(x => x.podcastTime == maxTime)[0];
+      this.display.maxTimePodcast = maxTimeObject.year + "/" + maxTimeObject.count + " (" + this.timeFormat(maxTime) + ")";
+      this.display.maxTimePodcastLink = maxTimeObject.podcastLink;
+
+      let minTime = Math.min(...this.podcastList.map(x => x.podcastTime));
+      let minTimeObject = this.podcastList.filter(x => x.podcastTime == minTime)[0];
+      this.display.minTimePodcast = minTimeObject.year + "/" + minTimeObject.count + " (" + this.timeFormat(minTime) + ")";
+      this.display.minTimePodcastLink = minTimeObject.podcastLink;
+
 
       this.podcastList.forEach(element => {
         if (this.chartYearPodcast.label.filter(x => x == element.year).length < 1) {
           this.chartYearPodcast.label.push(element.year);
           this.chartYearPodcast.dataset[0].data.push(this.podcastList.filter(x => x.year == element.year).length);
         }
+      });
+
+      this.podcastList.forEach(element => {
+        if (this.chartYearPodcastTime.label.filter(x => x == element.year).length < 1) {
+          this.chartYearPodcastTime.label.push(element.year);
+          this.chartYearPodcastTime.dataset[0].data.push(this.podcastList.filter(x => x.year == element.year).map(x => Math.floor(x.podcastTime / 60)).reduce((a, b) => { return a + b }));
+        }
+      });
+
+      this.podcastList.forEach(element => {
+        this.chartPodcastTime.label.push(element.totalCount + " - " + element.year + "/" + element.count);
+        this.chartPodcastTime.dataset[0].data.push(Math.floor(element.podcastTime / 60));
       });
 
       this.podcastList.forEach(element => {
@@ -143,6 +194,14 @@ export class MainComponent implements OnInit {
 
       this.display.isLoading = false;
     });
+  }
+
+  public timeFormat(totalSeconds: number): string {
+    let hour = Math.floor(totalSeconds / 3600);
+    let minute = Math.floor((totalSeconds % 3600) / 60);
+    let seconds = (totalSeconds % 3600) % 60;
+
+    return hour + ":" + minute + ":" + seconds;
   }
 
 }

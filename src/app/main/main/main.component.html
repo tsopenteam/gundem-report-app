@@ -21,21 +21,6 @@
             <div class="card">
                 <div class="card-body">
                     <div class="card-header">
-                        <b>Yıllara Göre Podcast Sayısı</b>
-                    </div>
-                    <div class="chart-wrapper">
-                        <canvas baseChart [datasets]="chartYearPodcast.dataset" [labels]="chartYearPodcast.label"
-                            [options]="chartYearPodcast.option" [colors]="chartYearPodcast.color"
-                            [legend]="chartYearPodcast.legend" [chartType]="chartYearPodcast.type">
-                        </canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm mb-1">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-header">
                         <b>Genel Bilgiler</b>
                     </div>
                     <ul class="list-group list-group-flush">
@@ -64,6 +49,81 @@
                             <span class="badge badge-primary">{{display.totalPodcastExplanation}}</span>
                         </li>
                     </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm mb-1">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-header">
+                        <b>Genel Bilgiler</b>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Toplam Podcast Süresi
+                            <span class="badge badge-dark p-2">{{display.totalPodcastTime}}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            En Uzun Süren Podcast
+                            <a class="badge badge-dark p-2" [href]="display.maxTimePodcastLink" target="_blank"
+                                rel="noopener noreferrer">{{display.maxTimePodcast}}</a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            En Kısa Süren Podcast
+                            <a class="badge badge-dark p-2" [href]="display.minTimePodcastLink" target="_blank"
+                                rel="noopener noreferrer">{{display.minTimePodcast}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-sm mb-1">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-header">
+                        <b>Yıllara Göre Podcast Sayısı</b>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas baseChart [datasets]="chartYearPodcast.dataset" [labels]="chartYearPodcast.label"
+                            [options]="chartYearPodcast.option" [colors]="chartYearPodcast.color"
+                            [legend]="chartYearPodcast.legend" [chartType]="chartYearPodcast.type">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm mb-1">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-header">
+                        <b>Yıllara Göre Podcast Süreleri</b>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas baseChart [datasets]="chartYearPodcastTime.dataset"
+                            [labels]="chartYearPodcastTime.label" [options]="chartYearPodcastTime.option"
+                            [colors]="chartYearPodcastTime.color" [legend]="chartYearPodcastTime.legend"
+                            [chartType]="chartYearPodcastTime.type">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-sm mb-1">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-header">
+                        <b>Podcast Süre Grafiği</b>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas baseChart [datasets]="chartPodcastTime.dataset" [labels]="chartPodcastTime.label"
+                            [options]="chartPodcastTime.option" [colors]="chartPodcastTime.color"
+                            [legend]="chartPodcastTime.legend" [chartType]="chartPodcastTime.type">
+                        </canvas>
+                    </div>
                 </div>
             </div>
         </div>
