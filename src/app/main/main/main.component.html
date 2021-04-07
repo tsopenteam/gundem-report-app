@@ -8,7 +8,7 @@
         <a class="navbar-brand text-white" style="font-size: 14px; line-height: 28px;" href="./">
             <img src="https://raw.githubusercontent.com/tsopenteam/content/master/images/logo/tsopenteam-logo.png"
                 width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
-            Teknoseyir Gündem İstatistikleri</a>
+            Teknoseyir Haftalık Gündem İstatistikleri</a>
 
         <div *ngIf="display.isLoading" class="clearfix">
             <div class="spinner-border float-right" role="status">
@@ -65,13 +65,19 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             En Uzun Süren Podcast
-                            <a class="badge badge-dark p-2" [href]="display.maxTimePodcastLink" target="_blank"
-                                rel="noopener noreferrer">{{display.maxTimePodcast}}</a>
+                            <div>
+                                <span class="badge badge-dark p-2">{{display.maxTimePodcast}}</span>
+                                <a class="badge badge-info p-2 ml-1" [href]="display.maxTimePodcastLink" target="_blank"
+                                    rel="noopener noreferrer">dinle</a>
+                            </div>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             En Kısa Süren Podcast
-                            <a class="badge badge-dark p-2" [href]="display.minTimePodcastLink" target="_blank"
-                                rel="noopener noreferrer">{{display.minTimePodcast}}</a>
+                            <div>
+                                <span class="badge badge-dark p-2">{{display.minTimePodcast}}</span>
+                                <a class="badge badge-info p-2 ml-1" [href]="display.minTimePodcastLink" target="_blank"
+                                    rel="noopener noreferrer">dinle</a>
+                            </div>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             Ortalama Podcast Süresi
@@ -199,6 +205,6 @@
     </div>
     <hr>
     <div class="text-center mb-5">
-        <span>tsopenteam | 2020</span>
+        <span>tsopenteam | {{footerYear}}</span>
     </div>
 </div>
