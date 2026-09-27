@@ -56,7 +56,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="card-header">
-                        <b>Genel Bilgiler</b>
+                        <b>Podcast Bilgileri</b>
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -84,6 +84,55 @@
                             <span class="badge badge-dark p-2">{{display.avgTimePodcast}}</span>
                         </li>
                     </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-sm mb-1">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-header">
+                        <b>Youtube Bilgileri</b>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Kanal Linki
+                            <a class="badge badge-danger p-2 ml-1" [href]="display.youtubeChannelUrl" target="_blank"
+                                rel="noopener noreferrer">teknoseyir</a>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Giriş Tarihi
+                            <span class="badge badge-primary">{{display.youtubeJoinedDate}}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Abone Sayısı
+                            <span class="badge badge-primary">{{display.youtubeSubscriberCount}}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Toplam İzlenme
+                            <span class="badge badge-primary">{{display.youtubeViewCount}}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Toplam Video
+                            <span class="badge badge-primary">{{display.youtubeVideoCount}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm mb-1">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-header">
+                        <b>Youtube İzlenme Sayısı</b>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas baseChart [datasets]="chartYoutubeViewCount.dataset" [labels]="chartYoutubeViewCount.label"
+                            [options]="chartYoutubeViewCount.option" [colors]="chartYoutubeViewCount.color"
+                            [legend]="chartYoutubeViewCount.legend" [chartType]="chartYoutubeViewCount.type">
+                        </canvas>
+                    </div>
                 </div>
             </div>
         </div>

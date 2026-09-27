@@ -28,6 +28,15 @@ export class MainComponent implements OnInit {
     type: 'line'
   };
 
+  public chartYoutubeViewCount = {
+    dataset: [{ data: [], label: 'Youtube İzlenme Sayısı' }],
+    label: [],
+    option: this.commonChartFeatures.option,
+    color: [{ backgroundColor: 'rgba(76, 10, 1, 0.4)', borderColor: 'rgba(76, 10, 1, 0.5)' }],
+    legend: this.commonChartFeatures.legend,
+    type: this.commonChartFeatures.type
+  };
+
   public chartYearPodcast = {
     dataset: [{ data: [], label: 'Podcast Sayısı' }],
     label: [],
@@ -106,7 +115,12 @@ export class MainComponent implements OnInit {
     maxTimePodcastLink: "",
     minTimePodcast: "",
     minTimePodcastLink: "",
-    avgTimePodcast: ""
+    avgTimePodcast: "",
+    youtubeChannelUrl: "",
+    youtubeJoinedDate: "",
+    youtubeSubscriberCount: 0,
+    youtubeViewCount: 0,
+    youtubeVideoCount: 0
   };
 
   constructor(
@@ -198,6 +212,42 @@ export class MainComponent implements OnInit {
         }
       });
 
+
+      this.display.isLoading = false;
+    });
+
+    this.mainService.GetYoutubeMainData().subscribe(res => {
+      this.display.youtubeChannelUrl = res["channelUrl"];
+      this.display.youtubeJoinedDate = res["joinedDate"];
+
+      this.display.isLoading = false;
+    });
+
+    this.mainService.GetYoutubeData().subscribe(res => {
+      let list: any[] = res as [];
+
+      let sortedList = list.sort((a, b) => {
+        const [dayA, monthA, yearA] = a.date.split('.').map(Number);
+        const [dayB, monthB, yearB] = b.date.split('.').map(Number);
+
+        return new Date(yearB, monthB - 1, dayB).getTime()
+          - new Date(yearA, monthA - 1, dayA).getTime();
+      });
+
+      let lastData = sortedList[0];
+      this.display.youtubeSubscriberCount = lastData.subscriberCount.toLocaleString('tr-TR');
+      this.display.youtubeViewCount = lastData.viewCount.toLocaleString('tr-TR');
+      this.display.youtubeVideoCount = lastData.videoCount.toLocaleString('tr-TR');
+
+      list.forEach(element => {
+        let date: string = element.date;
+        let count: number = element.viewCount;
+
+        if (this.chartYoutubeViewCount.label.filter(x => x == date).length < 1) {
+          this.chartYoutubeViewCount.label.push(date);
+          this.chartYoutubeViewCount.dataset[0].data.push(count.toString());
+        }
+      });
 
       this.display.isLoading = false;
     });
