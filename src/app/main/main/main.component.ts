@@ -239,7 +239,7 @@ export class MainComponent implements OnInit {
       this.display.youtubeViewCount = lastData.viewCount.toLocaleString('tr-TR');
       this.display.youtubeVideoCount = lastData.videoCount.toLocaleString('tr-TR');
 
-      list.forEach(element => {
+      list.reverse().forEach(element => {
         let date: string = element.date;
         let count: number = element.viewCount;
 
